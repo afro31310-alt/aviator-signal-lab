@@ -3,223 +3,229 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#a90e18">
-<title>Aviator Live Result Tracker</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aviator Analyzer</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#0b0b10;color:#fff;font-family:Arial,sans-serif}
-.wrap{max-width:700px;margin:auto;padding:18px 14px 35px}
-header{display:flex;align-items:center;gap:12px;margin-bottom:20px}
-.logo{background:#df1e30;border-radius:12px;padding:12px;font-size:24px}
-h1{font-size:21px;margin:0}
-.muted{color:#aaaeb9;font-size:13px;line-height:1.5}
-.badge{margin-left:auto;background:#24252d;padding:7px 10px;border-radius:20px;font-size:10px;color:#ffb4bb}
-.hero{background:linear-gradient(140deg,#481019,#19151c);border:1px solid #63242e;border-radius:20px;text-align:center;padding:24px 16px}
-.eyebrow{font-size:11px;letter-spacing:2px;color:#ff9ca6}
-.hero h2{font-size:25px;margin:12px 0}
-.big{font-size:54px;font-weight:900;color:#ff5365;margin:12px 0}
-.panel{background:#171820;border:1px solid #30313b;border-radius:16px;padding:17px;margin-top:14px}
-.panel h3{font-size:16px;margin:0 0 13px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-.stat{background:#171820;border:1px solid #30313b;border-radius:14px;padding:14px}
-.stat small{color:#a8aab4;font-size:12px}
-.stat strong{display:block;font-size:24px;margin-top:8px;overflow-wrap:anywhere}
-label{display:block;font-size:13px;margin:12px 0 7px;color:#ddd}
-input{width:100%;padding:14px;background:#0d0e13;border:1px solid #41434f;border-radius:10px;color:white;font-size:16px}
-button{padding:13px 15px;border:0;border-radius:10px;font-size:14px;font-weight:bold;cursor:pointer}
-.primary{width:100%;margin-top:12px;background:#df1e30;color:white}
-.secondary{background:#2a2b35;color:white}
-.danger{background:#43171d;color:#ff9ea7}
-.message{font-size:13px;min-height:18px;margin-top:10px;color:#59dda7}
-.entry{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid #30313b}
-.entry:last-child{border-bottom:0}
-.mult{font-size:19px;font-weight:bold;color:#ff6474}
-.empty{text-align:center;color:#a8aab4;padding:18px 0;font-size:13px}
-.row{display:flex;gap:9px}
-.row input{min-width:0}
-.notice{margin-top:14px;padding:13px;background:#20202a;border-left:3px solid #ffc857;border-radius:8px;color:#c6c6ce;font-size:12px;line-height:1.6}
-footer{text-align:center;color:#777986;font-size:11px;padding-top:20px}
-@media(min-width:500px){.grid{grid-template-columns:repeat(4,1fr)}.hero{padding:30px}}
+body{margin:0;background:#090a0f;color:#fff;font-family:Arial,sans-serif}
+header{text-align:center;padding:25px 12px;background:#180b11;border-bottom:2px solid #fa2944}
+h1{color:#ff304b;margin:0;font-size:28px}
+header p{color:#bbb;font-size:13px}
+main{max-width:650px;margin:auto;padding:14px}
+.card{background:#15161e;border:1px solid #30313d;border-radius:14px;padding:16px;margin-bottom:14px}
+h2{font-size:17px;margin-top:0}
+input{width:100%;padding:14px;background:#090a0f;border:1px solid #444;color:white;border-radius:9px;font-size:17px}
+button{padding:13px;border:0;border-radius:9px;font-weight:bold;cursor:pointer}
+.primary{width:100%;margin-top:10px;background:#fa2944;color:white}
+.secondary{background:#30313d;color:white}
+.result{font-size:27px;color:#ff5268;font-weight:bold;margin:12px 0}
+.muted{color:#aaa;font-size:12px;line-height:1.6}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:#0b0c11;padding:12px;border-radius:9px}
+.stat small{display:block;color:#aaa;font-size:11px;margin-bottom:8px}
+.stat strong{font-size:20px}
+.history{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.chip{padding:8px;background:#292a34;border-radius:7px;font-size:13px}
+.low{color:#ff7585}.high{color:#62e4b1}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.actions button{flex:1}
+footer{text-align:center;color:#888;font-size:11px;padding:15px}
 </style>
 </head>
 <body>
-<div class="wrap">
 <header>
-  <div class="logo">✈</div>
-  <div>
-    <h1>AVIATOR <span style="color:#ff5365">TRACKER</span></h1>
-    <div class="muted">Manual live-result log</div>
-  </div>
-  <div class="badge">RESULTS ONLY</div>
+<h1>AVIATOR ANALYZER</h1>
+<p>Review previous multipliers and track trends</p>
 </header>
 
-<section class="hero">
-  <div class="eyebrow">LATEST RECORDED RESULT</div>
-  <div class="big" id="latest">—</div>
-  <div class="muted" id="latestTime">Enter a result after a round finishes.</div>
+<main>
+<section class="card">
+<h2>Enter the last multiplier</h2>
+<input id="multiplier" type="number" min="1" step="0.01"
+inputmode="decimal" placeholder="Example: 1.45">
+<button class="primary" onclick="analyze()">ANALYZE RESULT</button>
+<p class="muted">Enter the actual multiplier after each round. Add one result at a time.</p>
 </section>
 
+<section class="card">
+<h2>Analysis</h2>
+<div class="muted">Historical practice estimate — not a next-round prediction</div>
+<div class="result" id="estimate">Waiting for results</div>
+<div id="summary" class="muted">Enter at least 5 results to show a historical reference range.</div>
+</section>
+
+<section class="card">
+<h2>Recent statistics</h2>
 <div class="grid">
-  <div class="stat"><small>Rounds recorded</small><strong id="count">0</strong></div>
-  <div class="stat"><small>Average multiplier</small><strong id="average">—</strong></div>
-  <div class="stat"><small>Highest multiplier</small><strong id="highest">—</strong></div>
-  <div class="stat"><small>Below 2.00x</small><strong id="below">0</strong></div>
+<div class="stat"><small>RESULTS SAVED</small><strong id="count">0</strong></div>
+<div class="stat"><small>LAST 10 AVG.</small><strong id="average">—</strong></div>
+<div class="stat"><small>HIGHEST RESULT</small><strong id="highest">—</strong></div>
+<div class="stat"><small>BELOW 2.00x</small><strong id="low">—</strong></div>
 </div>
-
-<section class="panel">
-  <h3>Record an actual result</h3>
-  <div class="muted">Open SportyBet Aviator, wait until the round ends, then enter the multiplier displayed by the game.</div>
-  <label for="multiplier">Actual multiplier</label>
-  <input id="multiplier" type="number" min="1" max="1000000" step="0.01" inputmode="decimal" placeholder="Example: 2.47">
-  <button class="primary" id="save">Save actual result</button>
-  <div class="message" id="message" aria-live="polite"></div>
+<p id="trend" class="muted">Your trend summary will appear here.</p>
 </section>
 
-<section class="panel">
-  <h3>Recent results <span class="muted" id="historyCount"></span></h3>
-  <div id="history"><div class="empty">No results recorded yet.</div></div>
+<section class="card">
+<h2>Timing information</h2>
+<div class="result" id="timing">No reliable play time</div>
+<p class="muted" id="timingInfo">Previous multipliers cannot reveal when the next round will be high. Use this section to record when you review rounds; do not treat a time as a betting signal.</p>
 </section>
 
-<section class="panel">
-  <h3>Manage your data</h3>
-  <div class="muted">Your records are saved in this browser on this device. They are not automatically shared with another phone.</div>
-  <div class="row" style="margin-top:12px">
-    <button class="secondary" id="export">Export CSV</button>
-    <button class="danger" id="clear">Clear history</button>
-  </div>
-  <div class="message" id="dataMessage"></div>
+<section class="card">
+<h2>Multiplier history</h2>
+<div id="history" class="history">No results yet.</div>
+<div class="actions">
+<button class="secondary" onclick="undoLast()">Undo last</button>
+<button class="secondary" onclick="exportCSV()">Export CSV</button>
+<button class="secondary" onclick="clearAll()">Clear all</button>
+</div>
+<p class="muted">History is saved in this browser on this device.</p>
 </section>
+</main>
 
-<div class="notice">
-<strong>Important:</strong> These are actual results that you enter manually, not an automatic connection to SportyBet. Past multipliers cannot reliably predict the next round. This tracker does not generate winning signals or guarantee profits.
-</div>
-<footer>AVIATOR TRACKER · Independent tool · Not affiliated with SportyBet</footer>
-</div>
+<footer>
+Independent tool, not affiliated with SportyBet. Past results do not reliably predict future rounds.
+</footer>
 
 <script>
-(function(){
-const $=id=>document.getElementById(id);
-const KEY='aviatorActualResultsV1';
-function load(){
-  try{
-    const data=JSON.parse(localStorage.getItem(KEY)||'[]');
-    return Array.isArray(data)?data:[];
-  }catch(e){return [];}
-}
-let results=load();
+const KEY = "aviator_analyzer_history_v2";
+let results = [];
 
-function saveStorage(){
-  try{
-    localStorage.setItem(KEY,JSON.stringify(results));
-    return true;
-  }catch(e){
-    $('message').textContent='Could not save. Check browser storage.';
-    return false;
-  }
+try {
+  results = JSON.parse(localStorage.getItem(KEY) || "[]");
+  if (!Array.isArray(results)) results = [];
+} catch(e) {
+  results = [];
 }
-function dateText(date){
-  return new Date(date).toLocaleString([],{
-    month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'
-  });
-}
-function render(){
-  $('count').textContent=results.length;
-  $('historyCount').textContent='('+results.length+')';
 
-  if(results.length===0){
-    $('latest').textContent='—';
-    $('latestTime').textContent='Enter a result after a round finishes.';
-    $('average').textContent='—';
-    $('highest').textContent='—';
-    $('below').textContent='0';
-    $('history').innerHTML='<div class="empty">No results recorded yet.</div>';
+function save() {
+  try {
+    localStorage.setItem(KEY, JSON.stringify(results));
+  } catch(e) {}
+}
+
+function format(n) {
+  return Number(n).toFixed(2) + "x";
+}
+
+function median(values) {
+  const sorted = [...values].sort((a,b) => a-b);
+  const mid = Math.floor(sorted.length / 2);
+  return sorted.length % 2
+    ? sorted[mid]
+    : (sorted[mid-1] + sorted[mid]) / 2;
+}
+
+function analyze() {
+  const field = document.getElementById("multiplier");
+  const raw = field.value.trim();
+  const value = Number(raw);
+
+  if (!raw || !Number.isFinite(value) || value < 1) {
+    alert("Enter a valid multiplier of 1.00 or higher.");
     return;
   }
 
-  const values=results.map(r=>r.value);
-  $('latest').textContent=values[values.length-1].toFixed(2)+'x';
-  $('latestTime').textContent='Recorded '+dateText(results[results.length-1].time);
-  $('average').textContent=(values.reduce((a,b)=>a+b,0)/values.length).toFixed(2)+'x';
-  $('highest').textContent=Math.max(...values).toFixed(2)+'x';
-  $('below').textContent=values.filter(v=>v<2).length;
-
-  $('history').innerHTML=results.slice().reverse().map((r,index)=>{
-    const number=results.length-index;
-    return '<div class="entry"><div><strong>Round record #'+number+
-      '</strong><div class="muted">'+dateText(r.time)+
-      '</div></div><div class="mult">'+r.value.toFixed(2)+'x</div></div>';
-  }).join('');
-}
-
-$('save').addEventListener('click',()=>{
-  const raw=$('multiplier').value.trim();
-  const value=Number(raw);
-
-  if(!raw||!Number.isFinite(value)||value<1||value>1000000){
-    $('message').style.color='#ff9ea7';
-    $('message').textContent='Enter a valid multiplier of 1.00 or higher.';
-    return;
-  }
-
-  results.push({
-    value:Math.round(value*100)/100,
-    time:new Date().toISOString()
-  });
-
-  if(results.length>2000)results=results.slice(-2000);
-
-  if(!saveStorage()){
-    results.pop();
-    return;
-  }
-
-  $('multiplier').value='';
-  $('message').style.color='#59dda7';
-  $('message').textContent='Actual result saved successfully.';
+  results.push(Math.round(value * 100) / 100);
+  save();
+  field.value = "";
   render();
-});
+}
 
-$('multiplier').addEventListener('keydown',e=>{
-  if(e.key==='Enter')$('save').click();
-});
+function render() {
+  const recent = results.slice(-10);
+  const count = results.length;
+  const average = recent.length
+    ? recent.reduce((a,b) => a+b, 0) / recent.length
+    : 0;
+  const lows = recent.filter(n => n < 2).length;
 
-$('clear').addEventListener('click',()=>{
-  if(!results.length)return;
-  if(confirm('Delete all recorded results from this browser?')){
-    const previous=results;
-    results=[];
-    try{
-      localStorage.setItem(KEY,'[]');
-      $('dataMessage').textContent='History cleared.';
-      render();
-    }catch(e){
-      results=previous;
-      $('dataMessage').textContent='Could not clear history.';
-    }
+  document.getElementById("count").textContent = count;
+  document.getElementById("average").textContent =
+    recent.length ? format(average) : "—";
+  document.getElementById("highest").textContent =
+    count ? format(Math.max(...results)) : "—";
+  document.getElementById("low").textContent =
+    recent.length ? Math.round(lows / recent.length * 100) + "%" : "—";
+
+  if (count < 5) {
+    document.getElementById("estimate").textContent = "Not enough data";
+    document.getElementById("summary").textContent =
+      "Add " + (5-count) + " more result(s) to calculate a historical reference range.";
+  } else {
+    const med = median(recent);
+    const lower = Math.max(1, med * 0.75);
+    const upper = Math.max(lower + 0.25, med * 1.5);
+
+    document.getElementById("estimate").textContent =
+      format(lower) + " – " + format(upper);
+    document.getElementById("summary").textContent =
+      "Reference range based on the median of recent results. It does not predict the next round.";
   }
-});
 
-$('export').addEventListener('click',()=>{
-  if(!results.length){
-    $('dataMessage').textContent='Record at least one result first.';
+  let trend = "Enter results to see a summary.";
+  if (recent.length) {
+    trend = "Last " + recent.length + " rounds averaged " +
+      format(average) + ". " +
+      Math.round(lows / recent.length * 100) +
+      "% were below 2.00x. This describes past results only.";
+  }
+  document.getElementById("trend").textContent = trend;
+
+  document.getElementById("history").innerHTML = results.length
+    ? [...results].reverse().map(n =>
+        '<span class="chip ' + (n < 2 ? 'low' : 'high') +
+        '">' + format(n) + '</span>'
+      ).join("")
+    : "No results yet.";
+
+  document.getElementById("timing").textContent =
+    "No reliable play time";
+  document.getElementById("timingInfo").textContent =
+    "Updated " + new Date().toLocaleTimeString() +
+    ". This is the analysis update time, not a prediction of when to bet.";
+}
+
+function undoLast() {
+  if (!results.length) return;
+  results.pop();
+  save();
+  render();
+}
+
+function clearAll() {
+  if (!results.length) return;
+  if (confirm("Delete all saved multiplier results?")) {
+    results = [];
+    save();
+    render();
+  }
+}
+
+function exportCSV() {
+  if (!results.length) {
+    alert("There are no results to export.");
     return;
   }
-  const csv='Multiplier,Recorded time\n'+results.map(r=>
-    r.value.toFixed(2)+',"'+new Date(r.time).toISOString()+'"'
-  ).join('\n');
-  const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
-  const a=document.createElement('a');
-  a.href=url;
-  a.download='aviator-results.csv';
+
+  const csv = "Round,Multiplier\n" +
+    results.map((n,i) => (i+1) + "," + n.toFixed(2)).join("\n");
+  const blob = new Blob([csv], {type:"text/csv;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "aviator-history.csv";
   a.click();
-  setTimeout(()=>URL.revokeObjectURL(url),1000);
-  $('dataMessage').textContent='CSV export requested.';
+  URL.revokeObjectURL(url);
+}
+
+document.getElementById("multiplier").addEventListener("keydown", e => {
+  if (e.key === "Enter") analyze();
 });
 
 render();
-})();
 </script>
 </body>
 </html>
+
 
