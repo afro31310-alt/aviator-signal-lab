@@ -1,188 +1,155 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Aviator Trend Signal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aviator Next Estimator</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#090a0f;color:#fff;font-family:Arial,sans-serif}
-header{text-align:center;padding:24px 12px;background:#1b0b12;border-bottom:2px solid #fa2944}
+header{text-align:center;padding:25px 12px;background:#1b0b12;border-bottom:2px solid #fa2944}
 h1{margin:0;color:#ff304b;font-size:27px}
-header p,.muted{color:#aaa;font-size:12px;line-height:1.6}
-main{max-width:650px;margin:auto;padding:14px}
-.card{background:#15161e;border:1px solid #30313d;border-radius:14px;padding:16px;margin-bottom:14px}
-h2{font-size:16px;margin-top:0}
-input{width:100%;padding:14px;background:#090a0f;border:1px solid #444;color:white;border-radius:9px;font-size:17px}
-button{padding:13px;border:0;border-radius:9px;font-weight:bold;cursor:pointer}
+header p{font-size:12px;color:#aaa}
+main{max-width:600px;margin:auto;padding:14px}
+.card{background:#15161e;border:1px solid #30313d;border-radius:14px;padding:17px;margin-bottom:14px}
+h2{font-size:17px;margin-top:0}
+label{display:block;color:#aaa;font-size:13px;margin-bottom:8px}
+input{width:100%;padding:15px;background:#090a0f;border:1px solid #444;color:white;border-radius:9px;font-size:18px}
+button{border:0;border-radius:9px;padding:14px;font-weight:bold;cursor:pointer}
 .primary{width:100%;margin-top:10px;background:#fa2944;color:white}
 .secondary{background:#30313d;color:white}
-.signal{font-size:25px;font-weight:900;margin:12px 0;color:#ffd166}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.stat{background:#0b0c11;padding:12px;border-radius:9px}
-.stat small{display:block;color:#aaa;font-size:10px;margin-bottom:7px}
-.stat strong{font-size:19px}
-.history,.actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
-.chip{padding:8px;background:#292a34;border-radius:7px;font-size:13px}
-.low{color:#ff7585}.high{color:#62e4b1}
+.signal{font-size:25px;font-weight:bold;color:#ff5268;margin:14px 0}
+.muted{font-size:12px;color:#aaa;line-height:1.6}
+.stat{background:#0b0c11;padding:12px;border-radius:9px;margin-top:8px}
+.history{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.chip{background:#292a34;padding:8px;border-radius:7px;font-size:13px}
+.actions{display:flex;gap:8px;margin-top:12px}
 .actions button{flex:1}
-footer{text-align:center;color:#888;font-size:11px;padding:15px}
+footer{text-align:center;color:#888;font-size:11px;padding:16px}
 </style>
 </head>
 <body>
 <header>
-<h1>AVIATOR SIGNAL</h1>
-<p>Previous-result trend analyzer</p>
+<h1>AVIATOR ANALYZER</h1>
+<p>Last-multiplier practice estimator</p>
 </header>
+
 <main>
 <section class="card">
-<h2>Enter the latest multiplier</h2>
-<input id="multiplier" type="number" min="1" step="0.01"
-inputmode="decimal" placeholder="Example: 1.45">
-<button class="primary" onclick="addResult()">ANALYZE & GENERATE SIGNAL</button>
-<p class="muted">Enter one actual multiplier after each completed round.</p>
+<h2>Enter your last multiplier</h2>
+<label for="lastMultiplier">Previous multiplier (example: 1.45)</label>
+<input id="lastMultiplier" type="number" min="1" step="0.01"
+inputmode="decimal" placeholder="Enter multiplier">
+<button class="primary" onclick="predict()">PREDICT NEXT</button>
+<p class="muted">This tool uses only the multiplier entered in this box. The next result cannot be reliably known from the previous result.</p>
 </section>
 
 <section class="card">
-<h2>Generated trend signal</h2>
-<div id="signal" class="signal">WAITING FOR RESULTS</div>
-<div id="explanation" class="muted">Enter at least 5 results to analyze recent history.</div>
-<p class="muted">This signal describes past results. It is not a reliable prediction of the next round.</p>
-</section>
-
-<section class="card">
-<h2>Practice estimate</h2>
-<div id="estimate" class="signal">Not enough data</div>
-<div id="estimateInfo" class="muted">Add at least 5 results for a historical reference range.</div>
-</section>
-
-<section class="card">
-<h2>Statistics</h2>
-<div class="grid">
-<div class="stat"><small>RESULTS SAVED</small><strong id="count">0</strong></div>
-<div class="stat"><small>LAST 10 AVG.</small><strong id="average">—</strong></div>
-<div class="stat"><small>HIGHEST RESULT</small><strong id="highest">—</strong></div>
-<div class="stat"><small>BELOW 2.00x</small><strong id="low">—</strong></div>
+<h2>Next multiplier estimate</h2>
+<div id="prediction" class="signal">Waiting for input</div>
+<div id="details" class="muted">Enter a multiplier and tap Predict Next.</div>
+<div class="stat">
+<strong>Analysis time</strong>
+<div id="time" class="muted">Not generated yet</div>
 </div>
-<p id="updated" class="muted">Analysis time: not yet generated.</p>
 </section>
 
 <section class="card">
-<h2>Multiplier history</h2>
-<div id="history" class="history">No results yet.</div>
+<h2>Last multiplier analysis</h2>
+<div class="stat">Previous multiplier: <strong id="previous">—</strong></div>
+<div class="stat">Multiplier category: <strong id="category">—</strong></div>
+<div class="stat">Input change: <strong id="change">—</strong></div>
+<p class="muted">The category describes the previous result only. It does not indicate what the next round will do.</p>
+</section>
+
+<section class="card">
+<h2>Recent inputs</h2>
+<div id="history" class="history">No multipliers entered.</div>
 <div class="actions">
-<button class="secondary" onclick="undoLast()">UNDO LAST</button>
-<button class="secondary" onclick="exportCSV()">EXPORT CSV</button>
-<button class="secondary" onclick="clearAll()">CLEAR</button>
+<button class="secondary" onclick="undoLast()">UNDO</button>
+<button class="secondary" onclick="clearHistory()">CLEAR</button>
 </div>
 </section>
 </main>
-<footer>Independent tool, not affiliated with SportyBet. Past multipliers cannot reliably reveal future outcomes.</footer>
+
+<footer>
+Independent practice tool, not affiliated with SportyBet. No guaranteed signals or winning times.
+</footer>
 
 <script>
-const KEY="aviator_signal_history_v3";
-let results=[];
+const KEY="aviator_last_multiplier_inputs";
+let history=[];
 try {
- results=JSON.parse(localStorage.getItem(KEY)||"[]");
- if(!Array.isArray(results))results=[];
-} catch(e){results=[];}
-
-const $=id=>document.getElementById(id);
-const fmt=n=>Number(n).toFixed(2)+"x";
+ history=JSON.parse(localStorage.getItem(KEY)||"[]");
+ if(!Array.isArray(history))history=[];
+} catch(e){history=[];}
 
 function save(){
- try{localStorage.setItem(KEY,JSON.stringify(results));}catch(e){}
+ try{localStorage.setItem(KEY,JSON.stringify(history));}catch(e){}
 }
 
-function median(values){
- const a=[...values].sort((x,y)=>x-y);
- const m=Math.floor(a.length/2);
- return a.length%2?a[m]:(a[m-1]+a[m])/2;
-}
-
-function addResult(){
- const raw=$("multiplier").value.trim();
+function predict(){
+ const input=document.getElementById("lastMultiplier");
+ const raw=input.value.trim();
  const n=Number(raw);
- if(!raw||!Number.isFinite(n)||n<1){
+
+ if(!raw || !Number.isFinite(n) || n<1){
   alert("Enter a valid multiplier of 1.00 or higher.");
   return;
  }
- results.push(Math.round(n*100)/100);
+
+ history.push(Math.round(n*100)/100);
  save();
- $("multiplier").value="";
- render();
+
+ let category;
+ if(n<2) category="Low previous result";
+ else if(n<5) category="Mid-range previous result";
+ else category="High previous result";
+
+ document.getElementById("previous").textContent=n.toFixed(2)+"x";
+ document.getElementById("category").textContent=category;
+ document.getElementById("change").textContent=
+  history.length>1
+   ? (n>history[history.length-2]?"Higher than your last entry":
+      n<history[history.length-2]?"Lower than your last entry":"Same as your last entry")
+   : "First entry";
+
+ document.getElementById("prediction").textContent="Next result: UNKNOWN";
+ document.getElementById("details").textContent=
+  "Practice estimate unavailable: one previous multiplier does not provide a reliable basis for estimating the next result. Do not treat this as a betting signal.";
+ document.getElementById("time").textContent=
+  new Date().toLocaleString()+" — analysis time, not a play time";
+
+ input.value="";
+ renderHistory();
 }
 
-function render(){
- const recent=results.slice(-10);
- const count=results.length;
- const avg=recent.length?recent.reduce((a,b)=>a+b,0)/recent.length:0;
- const lows=recent.filter(n=>n<2).length;
-
- $("count").textContent=count;
- $("average").textContent=recent.length?fmt(avg):"—";
- $("highest").textContent=count?fmt(Math.max(...results)):"—";
- $("low").textContent=recent.length?Math.round(lows/recent.length*100)+"%":"—";
-
- if(count<5){
-  $("signal").textContent="WAITING FOR RESULTS";
-  $("explanation").textContent="Enter "+(5-count)+" more result(s) before a trend summary can be displayed.";
-  $("estimate").textContent="Not enough data";
-  $("estimateInfo").textContent="At least 5 actual results are needed for a historical reference range.";
- } else {
-  const lowPct=lows/recent.length;
-  let label,detail;
-  if(lowPct>=0.6){
-   label="LOW-MULTIPLIER TREND";
-   detail="Many of the recent results were below 2.00x. This is a description of the past, not a signal to bet.";
-  } else if(lowPct<=0.3 && avg>=2){
-   label="MIXED / HIGHER PAST RESULTS";
-   detail="The recent sample had fewer results below 2.00x. This does not mean the next result will be high.";
-  } else {
-   label="NO CLEAR TREND";
-   detail="Recent results do not show a clear pattern using these simple rules.";
-  }
-  $("signal").textContent=label;
-  $("explanation").textContent=detail;
-
-  const med=median(recent);
-  const lower=Math.max(1,med*0.75);
-  const upper=Math.max(lower+0.25,med*1.5);
-  $("estimate").textContent=fmt(lower)+" – "+fmt(upper);
-  $("estimateInfo").textContent="Median-based reference range from recent history only; not a next-round forecast.";
- }
-
- $("updated").textContent="Analysis updated at "+new Date().toLocaleTimeString()+". This is the analysis time, not a recommended betting time.";
- $("history").innerHTML=results.length
-  ?[...results].reverse().map(n=>'<span class="chip '+(n<2?'low':'high')+'">'+fmt(n)+'</span>').join("")
-  :"No results yet.";
+function renderHistory(){
+ document.getElementById("history").innerHTML=history.length
+  ? [...history].reverse().map(n=>'<span class="chip">'+n.toFixed(2)+'x</span>').join("")
+  : "No multipliers entered.";
 }
 
 function undoLast(){
- if(!results.length)return;
- results.pop();save();render();
+ if(history.length)history.pop();
+ save();
+ renderHistory();
 }
-function clearAll(){
- if(!results.length)return;
- if(confirm("Clear all saved results?")){
-  results=[];save();render();
+
+function clearHistory(){
+ if(confirm("Clear all saved inputs?")){
+  history=[];
+  save();
+  renderHistory();
  }
 }
-function exportCSV(){
- if(!results.length){alert("No results to export.");return;}
- const csv="Round,Multiplier\n"+results.map((n,i)=>(i+1)+","+n.toFixed(2)).join("\n");
- const blob=new Blob([csv],{type:"text/csv;charset=utf-8"});
- const url=URL.createObjectURL(blob);
- const a=document.createElement("a");
- a.href=url;a.download="aviator-results.csv";a.click();
- URL.revokeObjectURL(url);
-}
-$("multiplier").addEventListener("keydown",e=>{
- if(e.key==="Enter")addResult();
+
+document.getElementById("lastMultiplier").addEventListener("keydown",e=>{
+ if(e.key==="Enter")predict();
 });
-render();
+
+renderHistory();
 </script>
 </body>
 </html>
