@@ -115,7 +115,12 @@ function predict(){
       n<history[history.length-2]?"Lower than your last entry":"Same as your last entry")
    : "First entry";
 
- document.getElementById("prediction").textContent="Next result: UNKNOWN";
+ document.getElementById("prediction").textContent =
+  "Practice range: " +
+  Math.max(1, Number(lastMultiplier) * 0.8).toFixed(2) +
+  "x – " +
+  (Number(lastMultiplier) * 1.2).toFixed(2) +
+  "x";
  document.getElementById("details").textContent=
   "Practice estimate unavailable: one previous multiplier does not provide a reliable basis for estimating the next result. Do not treat this as a betting signal.";
  document.getElementById("time").textContent=
