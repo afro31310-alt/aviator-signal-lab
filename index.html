@@ -3,236 +3,221 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#a90e18">
-<title>Aviator Signal Lab</title>
+<title>Aviator Live Result Tracker</title>
 <style>
-:root {
-  --red: #e21b2d;
-  --bg: #090a0e;
-  --panel: #14161d;
-  --text: #f5f5f7;
-  --muted: #a7aab5;
-  --line: #30333d;
-  --green: #43d69b;
-}
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  background: radial-gradient(circle at 50% -15%, #4b1019, #090a0e 65%);
-  font-family: Arial, sans-serif;
-  color: var(--text);
-  min-height: 100vh;
-}
-.wrap { width: min(100% - 24px, 760px); margin: auto; padding: 18px 0 35px; }
-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 18px; }
-.brand { display: flex; align-items: center; gap: 10px; font-weight: 900; font-size: 15px; }
-.logo { width: 42px; height: 42px; border-radius: 13px; background: linear-gradient(145deg,#ff4555,#920916); display: grid; place-items: center; font-size: 23px; }
-.tag { font-size: 10px; border: 1px solid #6d252d; color: #ffb7be; background: #341117; padding: 7px 9px; border-radius: 999px; }
-.hero { border: 1px solid #4b242a; border-radius: 22px; padding: 23px 16px; background: linear-gradient(135deg,#351016,#17141b 65%,#101117); text-align: center; }
-.eyebrow { color: #ff929c; font-size: 11px; letter-spacing: 2px; font-weight: 800; }
-h1 { font-size: clamp(26px,7vw,39px); margin: 10px 0; }
-.sub { color: var(--muted); font-size: 14px; line-height: 1.5; }
-.plane { font-size: 48px; margin: 16px 0 8px; }
-.signal-box { margin-top: 16px; background: #0c0d12; border: 1px solid #3c252b; border-radius: 18px; padding: 18px 12px; }
-.signal-label { font-size: 12px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
-.multiplier { font-size: clamp(44px,13vw,68px); font-weight: 900; color: #ff5361; margin: 9px 0; }
-.signal-note { font-size: 13px; color: var(--muted); line-height: 1.5; }
-.btn { border: 0; border-radius: 12px; padding: 14px 16px; font-size: 15px; font-weight: 800; cursor: pointer; min-height: 48px; }
-.btn-primary { width: 100%; background: linear-gradient(135deg,#ff394b,#b80d1c); color: white; margin-top: 15px; }
-.btn-secondary { background: #292c36; color: white; border: 1px solid #3b3e49; }
-.btn-danger { background: #39151a; color: #ff9ca5; border: 1px solid #64232b; }
-.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
-.card, .section { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 15px; }
-.small { font-size: 12px; color: var(--muted); line-height: 1.5; }
-.stat { font-size: 25px; font-weight: 900; margin-top: 6px; }
-.section { margin-top: 14px; padding: 17px; }
-.section-title { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
-.section-title h2 { font-size: 16px; margin: 0; }
-.pill { font-size: 11px; border-radius: 999px; padding: 6px 8px; background: #282b34; }
-label { display: block; font-size: 12px; color: #c4c6ce; margin: 12px 0 7px; }
-input { width: 100%; padding: 14px; border: 1px solid #3b3e49; background: #0e1016; color: white; border-radius: 11px; font-size: 16px; }
-.row { display: flex; gap: 9px; }
-.row input { min-width: 0; }
-.row .btn { white-space: nowrap; }
-.result-msg { font-size: 13px; min-height: 18px; margin-top: 9px; color: var(--green); }
-.history-list { display: grid; gap: 8px; }
-.history-item { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #1b1e27; border: 1px solid #2c2f39; padding: 12px; border-radius: 12px; }
-.history-main { font-weight: 800; font-size: 14px; }
-.history-meta { font-size: 11px; color: var(--muted); margin-top: 4px; }
-.mult-tag { font-weight: 900; color: #ff6975; font-size: 17px; }
-.empty { text-align: center; color: var(--muted); font-size: 13px; padding: 18px 8px; }
-.notice { font-size: 12px; color: #c3c5cd; line-height: 1.6; margin-top: 15px; padding: 13px; background: #171820; border-left: 3px solid #ffc857; border-radius: 9px; }
-footer { text-align: center; color: #797d89; font-size: 11px; padding-top: 20px; }
-@media (min-width:600px) { .hero { padding: 30px; } .grid { grid-template-columns: repeat(4,1fr); } }
+*{box-sizing:border-box}
+body{margin:0;background:#0b0b10;color:#fff;font-family:Arial,sans-serif}
+.wrap{max-width:700px;margin:auto;padding:18px 14px 35px}
+header{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.logo{background:#df1e30;border-radius:12px;padding:12px;font-size:24px}
+h1{font-size:21px;margin:0}
+.muted{color:#aaaeb9;font-size:13px;line-height:1.5}
+.badge{margin-left:auto;background:#24252d;padding:7px 10px;border-radius:20px;font-size:10px;color:#ffb4bb}
+.hero{background:linear-gradient(140deg,#481019,#19151c);border:1px solid #63242e;border-radius:20px;text-align:center;padding:24px 16px}
+.eyebrow{font-size:11px;letter-spacing:2px;color:#ff9ca6}
+.hero h2{font-size:25px;margin:12px 0}
+.big{font-size:54px;font-weight:900;color:#ff5365;margin:12px 0}
+.panel{background:#171820;border:1px solid #30313b;border-radius:16px;padding:17px;margin-top:14px}
+.panel h3{font-size:16px;margin:0 0 13px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.stat{background:#171820;border:1px solid #30313b;border-radius:14px;padding:14px}
+.stat small{color:#a8aab4;font-size:12px}
+.stat strong{display:block;font-size:24px;margin-top:8px;overflow-wrap:anywhere}
+label{display:block;font-size:13px;margin:12px 0 7px;color:#ddd}
+input{width:100%;padding:14px;background:#0d0e13;border:1px solid #41434f;border-radius:10px;color:white;font-size:16px}
+button{padding:13px 15px;border:0;border-radius:10px;font-size:14px;font-weight:bold;cursor:pointer}
+.primary{width:100%;margin-top:12px;background:#df1e30;color:white}
+.secondary{background:#2a2b35;color:white}
+.danger{background:#43171d;color:#ff9ea7}
+.message{font-size:13px;min-height:18px;margin-top:10px;color:#59dda7}
+.entry{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid #30313b}
+.entry:last-child{border-bottom:0}
+.mult{font-size:19px;font-weight:bold;color:#ff6474}
+.empty{text-align:center;color:#a8aab4;padding:18px 0;font-size:13px}
+.row{display:flex;gap:9px}
+.row input{min-width:0}
+.notice{margin-top:14px;padding:13px;background:#20202a;border-left:3px solid #ffc857;border-radius:8px;color:#c6c6ce;font-size:12px;line-height:1.6}
+footer{text-align:center;color:#777986;font-size:11px;padding-top:20px}
+@media(min-width:500px){.grid{grid-template-columns:repeat(4,1fr)}.hero{padding:30px}}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header>
-  <div class="brand"><div class="logo">✈</div><div>AVIATOR <span style="color:#ff5967">SIGNAL LAB</span></div></div>
-  <div class="tag">DEMO SIGNALS</div>
+  <div class="logo">✈</div>
+  <div>
+    <h1>AVIATOR <span style="color:#ff5365">TRACKER</span></h1>
+    <div class="muted">Manual live-result log</div>
+  </div>
+  <div class="badge">RESULTS ONLY</div>
 </header>
 
-<main>
 <section class="hero">
-  <div class="eyebrow">PRACTICE SIGNAL GENERATOR</div>
-  <h1>Prepare Your Session</h1>
-  <p class="sub">Generate a practice target and record actual multipliers after each round.</p>
-  <div class="plane">✈</div>
-  <div class="signal-box">
-    <div class="signal-label">Practice target</div>
-    <div class="multiplier" id="signalValue">1.50x</div>
-    <div class="signal-note" id="signalNote">This is a random practice suggestion, not a prediction.</div>
-  </div>
-  <button class="btn btn-primary" id="generateBtn">✦ Generate Practice Signal</button>
+  <div class="eyebrow">LATEST RECORDED RESULT</div>
+  <div class="big" id="latest">—</div>
+  <div class="muted" id="latestTime">Enter a result after a round finishes.</div>
 </section>
 
 <div class="grid">
-  <div class="card"><div class="small">Signals generated</div><div class="stat" id="signalCount">0</div></div>
-  <div class="card"><div class="small">Rounds recorded</div><div class="stat" id="roundCount">0</div></div>
-  <div class="card"><div class="small">Average recorded multiplier</div><div class="stat" id="averageValue">—</div></div>
-  <div class="card"><div class="small">Highest recorded multiplier</div><div class="stat" id="highestValue">—</div></div>
+  <div class="stat"><small>Rounds recorded</small><strong id="count">0</strong></div>
+  <div class="stat"><small>Average multiplier</small><strong id="average">—</strong></div>
+  <div class="stat"><small>Highest multiplier</small><strong id="highest">—</strong></div>
+  <div class="stat"><small>Below 2.00x</small><strong id="below">0</strong></div>
 </div>
 
-<section class="section">
-  <div class="section-title"><h2>Enter Actual Result</h2><span class="pill">Manual entry</span></div>
-  <p class="small">Enter the multiplier shown in the game after the round ends. This website does not connect to SportyBet.</p>
-  <label for="actualValue">Actual multiplier (example: 1.87)</label>
-  <div class="row">
-    <input id="actualValue" type="number" min="1" max="100000" step="0.01" inputmode="decimal" placeholder="Enter multiplier">
-    <button class="btn btn-secondary" id="saveResultBtn">Save</button>
+<section class="panel">
+  <h3>Record an actual result</h3>
+  <div class="muted">Open SportyBet Aviator, wait until the round ends, then enter the multiplier displayed by the game.</div>
+  <label for="multiplier">Actual multiplier</label>
+  <input id="multiplier" type="number" min="1" max="1000000" step="0.01" inputmode="decimal" placeholder="Example: 2.47">
+  <button class="primary" id="save">Save actual result</button>
+  <div class="message" id="message" aria-live="polite"></div>
+</section>
+
+<section class="panel">
+  <h3>Recent results <span class="muted" id="historyCount"></span></h3>
+  <div id="history"><div class="empty">No results recorded yet.</div></div>
+</section>
+
+<section class="panel">
+  <h3>Manage your data</h3>
+  <div class="muted">Your records are saved in this browser on this device. They are not automatically shared with another phone.</div>
+  <div class="row" style="margin-top:12px">
+    <button class="secondary" id="export">Export CSV</button>
+    <button class="danger" id="clear">Clear history</button>
   </div>
-  <div class="result-msg" id="resultMessage" aria-live="polite"></div>
+  <div class="message" id="dataMessage"></div>
 </section>
 
-<section class="section">
-  <div class="section-title"><h2>Signal History</h2><span class="pill" id="historyCount">0 items</span></div>
-  <div class="history-list" id="signalHistory"><div class="empty">No signals yet. Generate your first practice signal.</div></div>
-</section>
-
-<section class="section">
-  <div class="section-title"><h2>Recorded Game Results</h2><button class="btn btn-danger" id="clearResultsBtn" style="padding:8px 10px;min-height:36px;font-size:12px">Clear results</button></div>
-  <div class="history-list" id="resultsHistory"><div class="empty">No actual results recorded yet.</div></div>
-</section>
-
-<div class="notice"><strong>Important:</strong> Aviator outcomes are unpredictable. These are random practice suggestions, not forecasts or guaranteed signals. Do not stake money based on them or chase losses. History is stored in this browser on this device only.</div>
-</main>
-<footer>AVIATOR SIGNAL LAB · Independent demo tool · Not affiliated with SportyBet</footer>
+<div class="notice">
+<strong>Important:</strong> These are actual results that you enter manually, not an automatic connection to SportyBet. Past multipliers cannot reliably predict the next round. This tracker does not generate winning signals or guarantee profits.
+</div>
+<footer>AVIATOR TRACKER · Independent tool · Not affiliated with SportyBet</footer>
 </div>
 
 <script>
 (function(){
-  const $ = id => document.getElementById(id);
-  function read(key){
-    try {
-      const value = JSON.parse(localStorage.getItem(key));
-      return Array.isArray(value) ? value : [];
-    } catch(e) { return []; }
+const $=id=>document.getElementById(id);
+const KEY='aviatorActualResultsV1';
+function load(){
+  try{
+    const data=JSON.parse(localStorage.getItem(KEY)||'[]');
+    return Array.isArray(data)?data:[];
+  }catch(e){return [];}
+}
+let results=load();
+
+function saveStorage(){
+  try{
+    localStorage.setItem(KEY,JSON.stringify(results));
+    return true;
+  }catch(e){
+    $('message').textContent='Could not save. Check browser storage.';
+    return false;
+  }
+}
+function dateText(date){
+  return new Date(date).toLocaleString([],{
+    month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'
+  });
+}
+function render(){
+  $('count').textContent=results.length;
+  $('historyCount').textContent='('+results.length+')';
+
+  if(results.length===0){
+    $('latest').textContent='—';
+    $('latestTime').textContent='Enter a result after a round finishes.';
+    $('average').textContent='—';
+    $('highest').textContent='—';
+    $('below').textContent='0';
+    $('history').innerHTML='<div class="empty">No results recorded yet.</div>';
+    return;
   }
 
-  let signals = read('aviatorLabSignals');
-  let results = read('aviatorLabResults');
+  const values=results.map(r=>r.value);
+  $('latest').textContent=values[values.length-1].toFixed(2)+'x';
+  $('latestTime').textContent='Recorded '+dateText(results[results.length-1].time);
+  $('average').textContent=(values.reduce((a,b)=>a+b,0)/values.length).toFixed(2)+'x';
+  $('highest').textContent=Math.max(...values).toFixed(2)+'x';
+  $('below').textContent=values.filter(v=>v<2).length;
 
-  function persist(){
-    try {
-      localStorage.setItem('aviatorLabSignals', JSON.stringify(signals));
-      localStorage.setItem('aviatorLabResults', JSON.stringify(results));
-    } catch(e) {}
+  $('history').innerHTML=results.slice().reverse().map((r,index)=>{
+    const number=results.length-index;
+    return '<div class="entry"><div><strong>Round record #'+number+
+      '</strong><div class="muted">'+dateText(r.time)+
+      '</div></div><div class="mult">'+r.value.toFixed(2)+'x</div></div>';
+  }).join('');
+}
+
+$('save').addEventListener('click',()=>{
+  const raw=$('multiplier').value.trim();
+  const value=Number(raw);
+
+  if(!raw||!Number.isFinite(value)||value<1||value>1000000){
+    $('message').style.color='#ff9ea7';
+    $('message').textContent='Enter a valid multiplier of 1.00 or higher.';
+    return;
   }
 
-  function timeLabel(iso){
-    return new Date(iso).toLocaleString([], {
-      month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'
-    });
-  }
-
-  function escapeHtml(value){
-    return String(value).replace(/[&<>"']/g, c => ({
-      '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
-    }[c]));
-  }
-
-  function render(){
-    $('signalCount').textContent = signals.length;
-    $('roundCount').textContent = results.length;
-    $('historyCount').textContent = signals.length + ' items';
-
-    if(results.length){
-      const values = results.map(r => r.value);
-      $('averageValue').textContent =
-        (values.reduce((a,b) => a+b, 0) / values.length).toFixed(2) + 'x';
-      $('highestValue').textContent = Math.max(...values).toFixed(2) + 'x';
-    } else {
-      $('averageValue').textContent = '—';
-      $('highestValue').textContent = '—';
-    }
-
-    $('signalHistory').innerHTML = signals.length
-      ? signals.slice().reverse().map(s =>
-        '<div class="history-item"><div><div class="history-main">Practice signal</div><div class="history-meta">' +
-        timeLabel(s.time) + '</div></div><div class="mult-tag">' +
-        escapeHtml(s.target.toFixed(2)) + 'x</div></div>'
-      ).join('')
-      : '<div class="empty">No signals yet. Generate your first practice signal.</div>';
-
-    $('resultsHistory').innerHTML = results.length
-      ? results.slice().reverse().map(r =>
-        '<div class="history-item"><div><div class="history-main">Actual game result</div><div class="history-meta">' +
-        timeLabel(r.time) + '</div></div><div class="mult-tag">' +
-        escapeHtml(r.value.toFixed(2)) + 'x</div></div>'
-      ).join('')
-      : '<div class="empty">No actual results recorded yet.</div>';
-  }
-
-  $('generateBtn').addEventListener('click', function(){
-    const choices = [1.20,1.30,1.40,1.50,1.60,1.80,2.00,2.20,2.50,3.00];
-    const target = choices[Math.floor(Math.random() * choices.length)];
-    $('signalValue').textContent = target.toFixed(2) + 'x';
-    $('signalNote').textContent = 'Random practice target only. It cannot reveal the next real round.';
-    signals.push({target:target, time:new Date().toISOString()});
-    if(signals.length > 100) signals = signals.slice(-100);
-    persist();
-    render();
+  results.push({
+    value:Math.round(value*100)/100,
+    time:new Date().toISOString()
   });
 
-  $('saveResultBtn').addEventListener('click', function(){
-    const raw = $('actualValue').value.trim();
-    const value = Number(raw);
+  if(results.length>2000)results=results.slice(-2000);
 
-    if(!raw || !Number.isFinite(value) || value < 1 || value > 100000){
-      $('resultMessage').style.color = '#ff929c';
-      $('resultMessage').textContent = 'Enter a valid multiplier of 1.00 or higher.';
-      return;
-    }
+  if(!saveStorage()){
+    results.pop();
+    return;
+  }
 
-    results.push({
-      value: Math.round(value * 100) / 100,
-      time: new Date().toISOString()
-    });
-    if(results.length > 300) results = results.slice(-300);
-    persist();
-    render();
-    $('actualValue').value = '';
-    $('resultMessage').style.color = 'var(--green)';
-    $('resultMessage').textContent = 'Result saved on this device.';
-  });
-
-  $('clearResultsBtn').addEventListener('click', function(){
-    if(!results.length) return;
-    if(confirm('Clear all manually recorded results on this device?')){
-      results = [];
-      persist();
-      render();
-      $('resultMessage').textContent = 'Recorded results cleared.';
-    }
-  });
-
-  $('actualValue').addEventListener('keydown', function(e){
-    if(e.key === 'Enter') $('saveResultBtn').click();
-  });
-
+  $('multiplier').value='';
+  $('message').style.color='#59dda7';
+  $('message').textContent='Actual result saved successfully.';
   render();
+});
+
+$('multiplier').addEventListener('keydown',e=>{
+  if(e.key==='Enter')$('save').click();
+});
+
+$('clear').addEventListener('click',()=>{
+  if(!results.length)return;
+  if(confirm('Delete all recorded results from this browser?')){
+    const previous=results;
+    results=[];
+    try{
+      localStorage.setItem(KEY,'[]');
+      $('dataMessage').textContent='History cleared.';
+      render();
+    }catch(e){
+      results=previous;
+      $('dataMessage').textContent='Could not clear history.';
+    }
+  }
+});
+
+$('export').addEventListener('click',()=>{
+  if(!results.length){
+    $('dataMessage').textContent='Record at least one result first.';
+    return;
+  }
+  const csv='Multiplier,Recorded time\n'+results.map(r=>
+    r.value.toFixed(2)+',"'+new Date(r.time).toISOString()+'"'
+  ).join('\n');
+  const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
+  const a=document.createElement('a');
+  a.href=url;
+  a.download='aviator-results.csv';
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  $('dataMessage').textContent='CSV export requested.';
+});
+
+render();
 })();
 </script>
 </body>
